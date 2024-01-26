@@ -36,3 +36,5 @@ lerna-debug.log*
 
 #retirer les tests
 /test
+
+.gitignore
