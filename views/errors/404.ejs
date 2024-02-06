@@ -1,0 +1,13 @@
+<%- include('../partials/header', { title: "Page d'accueil"}) %>
+    <div class="container">
+        <% if (locals.message) { %>
+            <h1><%= locals.message %></h1>
+        <% } %>
+
+        <p>
+            <a href="/">Retour à la page d'accueil</a>
+        </p>
+    </div>
+
+    
+<%- include("../partials/footer") %>

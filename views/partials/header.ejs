@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/bootstrap5/css/bootstrap.min.css">
+    <title>EX-SORT | <%= title %></title>
+</head>
+<body>
+    <style>
+        .active {
+            color: red;
+        }
+    </style>
+    <header class="bg-warning">
+        <nav class="navbar navbar-expand-sm bg-ligth">
+            <div class="container">
+                <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div id="menu" class="collapse navbar-collapse">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a href="/" class="nav-link">Acceuil</a>
+                        </li>
+                        <% if (!locals.connected) { %>
+                        <li class="nav-item">
+                            <a href="/client/signup" class="nav-link">Inscription</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="/client/login" class="nav-link">Connexion</a>
+                        </li>
+                        <% } else { %>
+                        <li class="nav-item">
+                            <a href="/examen/add" class="nav-link">Créer un Examen</a>
+                        </li>
+                        <li class="nav-item">
+                            <li class="nav-link">
+                                <form action="/client/logout" method="post">
+                                    <button type="submit" class="btn">Déconnexion</button>
+                                </form>
+                            </li>
+                        </li>
+                        <% } %>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+   

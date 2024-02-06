@@ -1,0 +1,25 @@
+<%- include('../partials/header', { title: "Page de détail"}) %>
+    <div class="container">
+
+    <% if(locals.connected) { %>
+        <h1>Bonjour <%= locals.user.username %> </h1>
+        <% } else {%>
+        <h1>Bonjour Inconnu </h1>    
+    <% } %>
+
+    <main>
+        
+        <% if (locals.examen) { %>
+            <h1>Détail</h1>
+            <div>
+                <div>
+                    <h3><%= examen.libelle %> Auteur : <%= examen.client.username %></h3>
+                    <p><%= examen.description %></p>
+                </div>
+            
+            </div>
+        <% } %>
+    </main>
+    </div>
+
+<%- include("../partials/footer", {}) %>

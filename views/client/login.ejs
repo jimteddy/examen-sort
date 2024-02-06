@@ -1,0 +1,15 @@
+<%- include("../partials/header", {title: "Connexion"}) %>
+
+<div class="container">
+    <h1>Connexion</h1>
+    <form action="" method="post">
+        <%- include("../components/input", {type: 'email', name: 'email'}) %>
+        <%- include("../components/input", {type: 'password', name: 'password'}) %>
+        <div class="col-md-12">
+            <button class="btn btn-primary" type="submit">Connexion</button>
+        </div>
+    </form>
+</div>
+
+
+<%- include("../partials/footer", {}) %>
