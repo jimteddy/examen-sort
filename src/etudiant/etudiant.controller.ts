@@ -1,34 +1,41 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Session } from '@nestjs/common';
 import { EtudiantService } from './etudiant.service';
 import { CreateEtudiantDto } from './dto/create-etudiant.dto';
 import { UpdateEtudiantDto } from './dto/update-etudiant.dto';
+import { log } from 'console';
+import { ClasseService } from 'src/classe/classe.service';
 
 @Controller('etudiant')
 export class EtudiantController {
-  constructor(private readonly etudiantService: EtudiantService) {}
+  constructor(
+    private readonly etudiantService: EtudiantService,
+    //private readonly classeService: ClasseService 
+    ) {}
 
-  @Post()
-  create(@Body() createEtudiantDto: CreateEtudiantDto) {
-    return this.etudiantService.create(createEtudiantDto);
+  @Post('/add')
+  create(@Body() createEtudiantDto: CreateEtudiantDto, @Session() session: Record<string, any>) {
+    const currentClient = session.client
+    return this.etudiantService.create(createEtudiantDto, currentClient);
   }
 
   @Get()
-  findAll() {
-    return this.etudiantService.findAll();
+  async findAll() {
+    return await this.etudiantService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
-    return this.etudiantService.findOne(id);
+  @Get(':id/detail')
+  async findOne(@Param('id', ParseIntPipe) id: number) {
+    return await this.etudiantService.findOne(id);
   }
-
-  @Patch(':id')
+/*
+  @Post(':id/update')
   update(@Param('id', ParseIntPipe) id: number, @Body() updateEtudiantDto: UpdateEtudiantDto) {
     return this.etudiantService.update(id, updateEtudiantDto);
   }
-
-  @Delete(':id')
+*/
+  @Post(':id/delete')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.etudiantService.remove(id);
   }
+  
 }

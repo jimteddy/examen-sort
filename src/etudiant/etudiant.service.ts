@@ -1,20 +1,32 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateEtudiantDto } from './dto/create-etudiant.dto';
 import { UpdateEtudiantDto } from './dto/update-etudiant.dto';
 import { Repository } from 'typeorm';
 import { Etudiant } from './entities/etudiant.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { ClasseService } from 'src/classe/classe.service';
+import { Classe } from 'src/classe/entities/classe.entity';
+import { Client } from 'src/client/entities/client.entity';
+//import * as eventEmitter from ''
 
 @Injectable()
 export class EtudiantService {
   
   constructor(
-    @InjectRepository(Etudiant) private readonly etudiantRepository : Repository<Etudiant>
+    @InjectRepository(Etudiant) private readonly etudiantRepository : Repository<Etudiant>,
+    private readonly classeService : ClasseService
   ){}
 
-  async create(createEtudiantDto: CreateEtudiantDto): Promise<Etudiant> {
+  async create(createEtudiantDto: CreateEtudiantDto, client: Client): Promise<Etudiant> {
     try{
-      const etudiant = this.etudiantRepository.create(createEtudiantDto) 
+      const {noms, prenoms, sexe, lieuNaissance, dateNaissance, classeId} = createEtudiantDto
+
+      const classe = await this.classeService.findOne(classeId)
+      if(!classe) throw new UnauthorizedException()
+
+      const etudiant: Etudiant = this.etudiantRepository.create({
+        noms, prenoms, sexe, dateNaissance, lieuNaissance, classe, client
+      }) 
       return await this.etudiantRepository.save(etudiant)
     }catch(error){
       return error
@@ -28,11 +40,11 @@ export class EtudiantService {
   findOne(id: number): Promise<Etudiant> {
     return this.etudiantRepository.findOne({ where : { id: id}})
   }
-
+/*
   update(id: number, updateEtudiantDto: UpdateEtudiantDto) {
     return this.etudiantRepository.update(id, {...updateEtudiantDto})
   }
-
+*/
   async remove(id: number) {
     try{
       return await this.etudiantRepository.delete(id)

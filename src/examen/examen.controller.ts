@@ -4,29 +4,28 @@ import { ExamenService } from './examen.service';
 import { CreateExamanDto } from './dto/create-examen.dto';
 import { UpdateExamanDto } from './dto/update-examen.dto';
 import { Client } from 'src/client/entities/client.entity';
+import { Examen } from './entities/examen.entity';
 
 @Controller('examen')
 export class ExamenController {
   constructor(private readonly examenService: ExamenService) { }
 
-  @Get()
-  @Render('examen/all')
-  findAll() {
-    return this.examenService.findAll();
-  }
-
-  @Get('/add')
-  @Render('examen/add')
-  getExamen() { }
-
   @Post('/add')
   @Redirect('/examen')
-  postExamen(@Body() createExamanDto: CreateExamanDto, @Session() session: Record<string, any>) {
+  async postExamen(@Body() createExamanDto: CreateExamanDto, @Session() session: Record<string, any>) {
     const currentClient: Client = session.client
-    this.examenService.create(createExamanDto, currentClient)
+    const examen = await this.examenService.create(createExamanDto, currentClient)
   }
 
-  @Get('detail/:id')
+  @Get()
+  @Render('examen/index')
+  async findAll(@Session() session: Record<string, any>) {
+    const currentClient: Client = session.client
+    const examens: Examen[] = await this.examenService.findAll(currentClient)
+    return {examens}
+  }
+
+  @Get(':id')
   @Render('examen/detail')
   async findOne(@Param('id', ParseIntPipe) id: number, @Res() res: Response) {
     try {
@@ -38,12 +37,12 @@ export class ExamenController {
 
   }
 
-  @Patch('update/:id')
+  @Patch(':id')
   update(@Param('id', ParseIntPipe) id: number, @Body() updateExamanDto: UpdateExamanDto) {
     return this.examenService.update(id, updateExamanDto);
   }
 
-  @Delete('remove/:id')
+  @Delete(':id')
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.examenService.remove(id);
   }

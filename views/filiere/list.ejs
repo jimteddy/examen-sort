@@ -1,0 +1,26 @@
+<% if (locals.filieres) { %>
+    <table class="table table-bordered table-hover table-primary table-striped mt-2">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Libelle</th>
+                <th class="text-warning" >Modifier</th>
+                <th class="text-danger">Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% filieres.forEach(filiere => { %>
+            <tr>
+                <td><%= filiere.id %></td>
+                <td><%= filiere.libelle %></td>
+                <td><button class="btn btn-warning" ><a href="/filiere/<%= filiere.id %>">Modifier</a></button></td>
+                <td><button class="btn btn-danger" ><a href="/filiere/<%= filiere.id %>">Supprimer</a></button></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <% } else { %>
+        <div class="mt-2">
+            <h3>Aucun élèment dans la liste</h3>
+        </div>
+    <% } %>

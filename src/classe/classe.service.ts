@@ -4,6 +4,7 @@ import { UpdateClasseDto } from './dto/update-classe.dto';
 import { Repository } from 'typeorm';
 import { Classe } from './entities/classe.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Client } from 'src/client/entities/client.entity';
 
 @Injectable()
 export class ClasseService {
@@ -12,17 +13,25 @@ export class ClasseService {
     @InjectRepository(Classe) private readonly classeRepository: Repository<Classe>,
   ){}
 
-  async create(createClasseDto: CreateClasseDto) : Promise<Classe> {
+  async create(client: Client, createClasseDto: CreateClasseDto) : Promise<Classe> {
     try{
       const classe = this.classeRepository.create(createClasseDto)
+      classe.client = client
       return await this.classeRepository.save(classe)
     }catch(error){
       return error.message
     }
   }
 
-  findAll() : Promise<Classe[]> {
-    return this.classeRepository.find()
+  async findAll(client: Client) : Promise<Classe[]> {
+    const classes = await this.classeRepository.find({
+      where: {client: client},
+      order: {createAt: 'DESC'},
+      relations: {
+        client: true
+      }
+    })
+    return classes
   }
 
   findOne(id: number) {
@@ -40,4 +49,15 @@ export class ClasseService {
       return error.message
     }
   }
+
+  async getClasseEtudiant(id: number) {
+    const classe: Classe = await this.classeRepository.findOne({
+      where: {id: id},
+      relations: {
+        etudiants: true,
+      },
+    })    
+    return {classe}
+  }
+
 }

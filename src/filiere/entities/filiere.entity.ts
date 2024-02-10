@@ -1,5 +1,6 @@
 
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, Timestamp, UpdateDateColumn } from "typeorm";
+import { Client } from "src/client/entities/client.entity";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, Timestamp, UpdateDateColumn, ManyToOne } from "typeorm";
 
 
 @Entity()
@@ -16,4 +17,7 @@ export class Filiere {
 
   @UpdateDateColumn()
   readonly updateAt : Date;
+
+  @ManyToOne(() => Client, (client) => client.filieres)
+  client : Client;
 }

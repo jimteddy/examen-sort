@@ -1,9 +1,12 @@
+
 <table class="table table-bordered table-hover table-primary table-striped table-striped-columns">
     <thead>
         <tr>
-            <th>Prénom</th>
-            <th>Nom</th>
-            <th>Age</th>
+            <% if (titres) { %>
+                <% titres.forEach(titre => { %>
+                    <th><%= titre %></th>
+                <% }) %>
+            <% } %>
         </tr>
     </thead>
     <tbody>

@@ -1,0 +1,39 @@
+<% if (locals.classe) { %>
+    <table class="table table-bordered table-hover table-primary table-striped mt-2">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Noms</th>
+                <th>Prenoms</th>
+                <th>sexe</th>
+                <th>Date de naissance</th>
+                <th>lieu de naissance</th>
+                <th>Moyenne</th>
+                <th class="text-warning" >Modifier</th>
+                <th class="text-danger">Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% classe.etudiants.forEach(etudiant => { %>
+            <tr>
+                <td><%= etudiant.id %></td>
+                <td><%= etudiant.noms %></td>
+                <td><%= etudiant.prenoms %></td>
+                <td><%= etudiant.sexe %></td>
+                <td><%= etudiant.dateNaissance %></td>
+                <td><%= etudiant.lieuNaissance %></td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" href="/classe/<%= classe.id %>/etudiants">Voir les notes</a>
+                    <span>Moyenne</span><span class="badge text-bg-primary"><%= etudiant.Moyenne %></span>
+                </td>
+                <td><button class="btn btn-warning" ><a href="/etudiant/<%= etudiant.id %>/detail">Modifier</a></button></td>
+                <td><button class="btn btn-danger" ><a href="/etudiant/<%= etudiant.id %>/detail">Supprimer</a></button></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <% } else { %>
+        <div class="mt-2">
+            <h3>Aucun élèment dans la liste</h3>
+        </div>
+    <% } %>

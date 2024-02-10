@@ -1,0 +1,23 @@
+<%- include("../partials/header", {title: "Gestion des étudiants"}) %>
+
+<div class="container py-3">
+    <div>
+       <%- include('./table', {classe: locals.classe}) %>
+    </div>
+
+    <div class="py-3 d-none">
+        <form  action="/classe/upload" method="post" enctype="multipart/form-data" >
+            <button type="submit" class="btn btn-success sm">Envoyer</button>
+            <input type="file" name="doc">
+        </form>
+    </div>
+
+    <div>
+        <%- include('./form-add', {classe: locals.classe}) %>
+    </div>
+    <div>
+        <%- include('./list', {classe: locals.classe}) %>
+    </div>
+</div>
+
+<%- include("../partials/footer", {}) %>

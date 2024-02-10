@@ -33,15 +33,28 @@
                         </li>
                         <% } else { %>
                         <li class="nav-item">
-                            <a href="/examen/add" class="nav-link">Créer un Examen</a>
+                            <a href="/classe" class="nav-link">Gestion des Classes</a>
                         </li>
                         <li class="nav-item">
-                            <li class="nav-link">
-                                <form action="/client/logout" method="post">
-                                    <button type="submit" class="btn">Déconnexion</button>
-                                </form>
-                            </li>
+                            <a href="/salle" class="nav-link">Gestion des Salles</a>
                         </li>
+                        <li class="nav-item">
+                            <a href="/examen" class="nav-link">Gestion des Examens</a>
+                        </li>
+                    
+                        <li class="nav-item" >
+                            <a href="/filiere" class="nav-link">G - Filières</a>
+                        </li>
+                        <li class="nav-item" >
+                            <a href="/matter" class="nav-link">G - Matières</a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <form action="/client/logout" method="post">
+                                <button type="submit" class="btn nav-item">Déconnexion<span>(Compte <%= user.username %>)</span></button>
+                            </form>
+                        </li>
+                       
                         <% } %>
                     </ul>
                 </div>

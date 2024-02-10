@@ -1,0 +1,17 @@
+<form class="form" action="/classe/add" method="post" >
+    <%- include("../components/input", {type: 'text', name: 'name'}) %>
+    <% if (locals.periodes) { %>
+        <div class="mb-3 col-6 mx-auto">
+            <label class="form-label display-7" for="periode">Periode</label>
+            <select class="form-control form-control-sm" name="periode" >
+                <% periodes.forEach(element => { %>
+                    <option value="<%= element %>"><%= element %></option>
+                <% }) %>
+            </select>
+        </div>
+    <% } %>
+    
+    <div class="col-md-12 text-center">
+        <button class="btn btn-primary" type="submit">Ajouter une Classe</button>
+    </div>
+</form>

@@ -1,0 +1,18 @@
+<%- include("../partials/header", {title: "Gestion des Matières"}) %>
+
+<div class="container py-3">
+    <h2 class="text-center">Gestion des Matières</h2>
+    <div class="row row-cols-1 row-cols-md-1 row-cols-lg-2 py-0 px-0">
+
+        <div class="col col-md-4 col-lg-4 py-0 px-0">
+            <%- include('./form-add') %>
+        </div>
+        
+        <main class="col col-md-8 col-lg-8 py-0 px-0">
+            <%- include('./list', {matters : matters}) %>
+        </main>
+    </div>
+</div>
+
+
+<%- include("../partials/footer", {}) %>

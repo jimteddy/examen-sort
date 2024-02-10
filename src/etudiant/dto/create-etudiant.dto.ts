@@ -9,8 +9,14 @@ export class CreateEtudiantDto {
   @IsNotEmpty()
   @Length(1, 150)
   readonly prenoms : string;
+  
+  @IsNotEmpty()
+  readonly classeId : number;
 
   readonly sexe : string;
 
-  readonly moyenne : number;
+  readonly lieuNaissance: string;
+
+  readonly dateNaissance: Date;
+
 }

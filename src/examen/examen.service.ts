@@ -5,6 +5,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Examen } from './entities/examen.entity';
 import { Repository } from 'typeorm';
 import { Client } from 'src/client/entities/client.entity';
+import { log } from 'console';
 
 @Injectable()
 export class ExamenService {
@@ -17,16 +18,22 @@ export class ExamenService {
     try{
       const examen = this.examenRepository.create(createExamanDto)
       examen.client = client
-      await this.examenRepository.save(examen)
-      return "ok"
+      const newExamen = await this.examenRepository.save(examen)
+      return newExamen
     }catch(error){
       return error.message
     }
   }
 
-  async findAll() : Promise<Examen[]> {
+  async findAll(client : Client) : Promise<Examen[]> {
     try{
-      return await this.examenRepository.find({order: {createAt: 'DESC'}})
+      const examens = await this.examenRepository.find({
+        where: {client: client},
+        order: {createAt: 'DESC'},
+        relations : {
+          client: true,
+        }, })
+        return examens
     }catch(error){
       throw new BadRequestException("Pas d'examen trouvé")
     }

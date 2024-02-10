@@ -5,5 +5,7 @@ export class CreateClasseDto {
   @Length(2, 100)
   readonly name : string;    
   
-  readonly annee : string;   
+  @IsNotEmpty()
+  @Length(8, 10)
+  readonly periode : string;   
 }

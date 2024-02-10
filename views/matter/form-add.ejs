@@ -1,0 +1,7 @@
+<form class="form" action="/matter/add" method="post" >
+    <%- include("../components/input", {type: 'text', name: 'libelle'}) %>
+    <%- include("../components/input", {type: 'number', name: 'coefficient'}) %>
+    <div class="col-md-12 text-center">
+        <button class="btn btn-primary" type="submit">Nouvelle matière</button>
+    </div>
+</form>

@@ -1,20 +1,26 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Render, Redirect, Session } from '@nestjs/common';
 import { SalleService } from './salle.service';
 import { CreateSalleDto } from './dto/create-salle.dto';
 import { UpdateSalleDto } from './dto/update-salle.dto';
+import { log } from 'console';
+import { Client } from 'src/client/entities/client.entity';
 
 @Controller('salle')
 export class SalleController {
   constructor(private readonly salleService: SalleService) {}
 
-  @Post()
-  create(@Body() createSalleDto: CreateSalleDto) {
-    return this.salleService.create(createSalleDto);
+  @Post('/add')
+  @Redirect('/salle')
+  create(@Body() createSalleDto: CreateSalleDto, @Session() session: Record<string, any>) {
+    const currentClient: Client = session.client
+    return this.salleService.create(createSalleDto, currentClient);
   }
 
   @Get()
-  findAll() {
-    return this.salleService.findAll();
+  @Render('salle/index')
+  async findAll() {
+    const salles = await this.salleService.findAll();
+    return {salles}
   }
 
   @Get(':id')

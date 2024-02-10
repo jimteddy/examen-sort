@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Client } from "src/client/entities/client.entity";
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Matter {
@@ -15,12 +16,15 @@ export class Matter {
   @Column({default : true })
   readonly isActive : boolean
 
-
   @CreateDateColumn()
   readonly createAt : Date;
 
   @UpdateDateColumn()
   readonly updateAt : Date;
+
+
+  @ManyToOne(() => Client, (client) => client.matters)
+  client : Client;
 }
 
 

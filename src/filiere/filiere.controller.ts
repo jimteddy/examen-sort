@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Render, Redirect } from '@nestjs/common';
 import { FiliereService } from './filiere.service';
 import { CreateFiliereDto } from './dto/create-filiere.dto';
 import { UpdateFiliereDto } from './dto/update-filiere.dto';
@@ -7,14 +7,17 @@ import { UpdateFiliereDto } from './dto/update-filiere.dto';
 export class FiliereController {
   constructor(private readonly filiereService: FiliereService) {}
 
-  @Post()
+  @Post('/add')
+  @Redirect('/filiere')
   create(@Body() createFiliereDto: CreateFiliereDto) {
     return this.filiereService.create(createFiliereDto);
   }
 
   @Get()
-  findAll() {
-    return this.filiereService.findAll();
+  @Render('filiere/index')
+  async findAll() {
+    const filieres = await this.filiereService.findAll();
+    return { filieres }
   }
 
   @Get(':id')

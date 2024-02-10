@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Client } from "src/client/entities/client.entity";
+import { Etudiant } from "src/etudiant/entities/etudiant.entity";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, OneToMany, ManyToOne } from "typeorm";
 
 
 @Entity()
@@ -18,4 +20,11 @@ export class Classe {
 
   @UpdateDateColumn()
   readonly updateAt : Date;
+
+  @OneToMany(() => Etudiant, (etudiant)=> etudiant.classe)
+  etudiants: Etudiant[]
+
+  @ManyToOne(() => Client, (client) => client.classes)
+  client : Client;
+
 }

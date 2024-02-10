@@ -1,28 +1,7 @@
-<%- include('./partials/header', { title: "Page d'accueil"}) %>
+<%- include('./partials/header', { title: "Page d'acceuil"}) %>
     <div class="container">
 
-    <% if(locals.connected) { %>
-        <h1>Bonjour <%= locals.user.username %> </h1>
-        <% } else {%>
-        <h1>Bonjour Inconnu </h1>    
-    <% } %>
-
-
-    <main>
-        <% if (locals.examens) { %>
-            <div>
-                <% examens.forEach(examen => { %>
-                 <div>
-                    <h3><%= examen.libelle %></h3>
-                    <p><%= examen.description.substring(0, 10).concat('...') %>
-                        <button class="btn" ><a href="/examen/detail/<%= examen.id %>">Voir detail</a></button>
-                    </p>
-                 </div>
-                <% }) %>
-            </div>
-        <% } %>
-    </main>
+ 
 
     </div>
-    
 <%- include("./partials/footer") %>

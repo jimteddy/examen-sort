@@ -1,0 +1,26 @@
+<% if (locals.classe) { %>
+
+<form class="form" action="/etudiant/add" method="post" >
+    <%- include("../components/input", {type: 'text', name: 'noms'}) %>
+    <%- include("../components/input", {type: 'text', name: 'prenoms'}) %>
+    <div class="mb-3 col-6 mx-auto">
+        <label class="form-label display-7" for="periode">Sexe</label>
+        <select class="form-control form-control-sm" name="sexe" >
+            <option value="F">Femme</option>
+            <option value="M">Homme</option>
+        </select>
+    </div>
+    <%- include("../components/input", {type: 'text', name: 'lieuNaissance'}) %>
+    <%- include("../components/input", {type: 'date', name: 'dateNaissance'}) %>
+    <input type="number" hidden name="classeId" value="<%= classe.id %>">
+    <div class="col-md-12 text-center">
+        <button class="btn btn-primary" type="submit">Créer un etudiant</button>
+    </div>
+</form>
+
+<% } else { %>
+    <div>
+        <h1>COUCOU</h1>
+    </div>
+<% }  %>
+ 

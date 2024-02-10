@@ -1,0 +1,30 @@
+<% if (locals.salles) { %>
+    <table class="table table-bordered table-hover table-primary table-striped ">
+        <thead>
+            <tr>
+                <th>N°</th>
+                <th>Nom</th>
+                <th>Capacité</th>
+                <th>Favoris</th>
+                <th class="text-warning" >Modifier</th>
+                <th class="text-danger">Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% salles.forEach(salle => { %>
+            <tr>
+                <td><%=  %></td>
+                <td><%= salle.name %></td>
+                <td><%= salle.capacity %></td>
+                <td><%= salle.isFavorite %></td>
+                <td><button class="btn btn-warning" ><a href="/salle/<%= salle.id %>">Modifier</a></button></td>
+                <td><button class="btn btn-danger" ><a href="/salle/<%= salle.id %>">Supprimer</a></button></td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <% } else { %>
+        <div class="mt-2">
+            <h3>Aucun élèment dans la liste</h3>
+        </div>
+    <% } %>

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Redirect, Render } from '@nestjs/common';
 import { MatterService } from './matter.service';
 import { CreateMatterDto } from './dto/create-matter.dto';
 import { UpdateMatterDto } from './dto/update-matter.dto';
@@ -7,14 +7,17 @@ import { UpdateMatterDto } from './dto/update-matter.dto';
 export class MatterController {
   constructor(private readonly matterService: MatterService) {}
 
-  @Post()
-  create(@Body() createMatterDto: CreateMatterDto) {
-    return this.matterService.create(createMatterDto);
+  @Post('/add')
+  @Redirect('/matter')
+  async create(@Body() createMatterDto: CreateMatterDto) {
+    return await this.matterService.create(createMatterDto);
   }
 
   @Get()
-  findAll() {
-    return this.matterService.findAll();
+  @Render('matter/index')
+  async findAll() {
+    const matters = await this.matterService.findAll();
+    return { matters }
   }
 
   @Get(':id')
@@ -28,7 +31,8 @@ export class MatterController {
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseIntPipe) id: number) {
-    return this.matterService.remove(id);
+  @Redirect('/matter')
+  async remove(@Param('id', ParseIntPipe) id: number) {
+    return await this.matterService.remove(id);
   }
 }

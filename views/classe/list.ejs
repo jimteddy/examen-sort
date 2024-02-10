@@ -1,0 +1,38 @@
+<% if (locals.classes) { %>
+    <table class="table table-bordered table-hover table-primary table-striped ">
+        <thead>
+            <tr>
+                <th>N°</th>
+                <th>Nom</th>
+                <th>Année</th>
+                <th>Voir</th>
+                <th class="text-warning" >Modifier</th>
+                <th class="text-danger">Supprimer</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% classes.forEach(classe => { %>
+            <tr>
+                <td><%=  %></td>
+                <td><%= classe.name %></td>
+                <td><%= classe.periode %></td>
+                <td>
+                    <a class="btn btn-outline-primary btn-sm" href="/classe/<%= classe.id %>/etudiants">Voir la liste d'étudiants</a> 
+                    <span class="badge text-bg-primary"><%= nombre %></span>
+                </td>
+                
+                <td>
+                    <a class="btn btn-outline-warning text-dark" href="/classe/<%= classe.id %>">Modifier</a>
+                </td>
+                <td>
+                    <a class="btn btn-outline-danger text-dark" href="/classe/<%= classe.id %>">Supprimer</a>
+                </td>
+            </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <% } else { %>
+        <div class="mt-2">
+            <h3>Aucun élèment dans la liste</h3>
+        </div>
+    <% } %>

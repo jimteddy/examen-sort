@@ -35,7 +35,7 @@ async function bootstrap() {
       secret: "my-secret-code",
       resave: false,
       saveUninitialized: false,
-      cookie: {maxAge : 30 * 24 * 60 * 60 * 1000 }, // 30 days
+      cookie: {maxAge : 1 * 1 * 60 * 60 * 1000 }, // j * h * m * s * t //> 1h
       store: store
     })
     );

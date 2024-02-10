@@ -16,6 +16,7 @@ import { Etudiant } from './etudiant/entities/etudiant.entity';
 import { Filiere } from './filiere/entities/filiere.entity';
 import { Matter } from './matter/entities/matter.entity';
 import { Salle } from './salle/entities/salle.entity';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -37,7 +38,8 @@ import { Salle } from './salle/entities/salle.entity';
     EtudiantModule,
     MatterModule,
     ExamenModule,
-    FiliereModule,   
+    FiliereModule,
+    //AuthModule,   
     ],
   controllers: [AppController],
   providers: [AppService],

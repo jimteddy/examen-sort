@@ -1,0 +1,17 @@
+
+
+<form class="form" action="/examen/add" method="post">
+    <%- include("../components/input", {type: 'text', name: 'libelle'}) %>
+    <div class="mb-3 col-6 mx-auto">
+        <label class="form-label" for="description">Description</label>
+        <textarea class="form-control" name="description" id="description" 
+        cols="2" rows="2"></textarea>
+    </div>
+    <%- include("../components/input", {type: 'date', name: 'dateDebut'}) %>
+    <%- include("../components/input", {type: 'date', name: 'dateFin'}) %>
+    <div class="col-md-12 text-center">
+        <button class="btn btn-primary" type="submit">Créer un examen</button>
+    </div>
+</form>
+
+ 
