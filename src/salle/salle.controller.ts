@@ -1,10 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Render, Redirect, Session } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Render, Redirect, Session, UseGuards } from '@nestjs/common';
 import { SalleService } from './salle.service';
 import { CreateSalleDto } from './dto/create-salle.dto';
 import { UpdateSalleDto } from './dto/update-salle.dto';
 import { log } from 'console';
 import { Client } from 'src/client/entities/client.entity';
 
+import { SessionGuard } from 'src/guards/session.guard';
+
+@UseGuards(SessionGuard)
 @Controller('salle')
 export class SalleController {
   constructor(private readonly salleService: SalleService) {}
@@ -18,13 +21,14 @@ export class SalleController {
 
   @Get()
   @Render('salle/index')
-  async findAll() {
-    const salles = await this.salleService.findAll();
+  async findAll(@Session() session: Record<string, any>) {
+    const currentClient: Client = session.client
+    const salles = await this.salleService.findAll(currentClient);
     return {salles}
   }
 
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  findOne(@Param('id', ParseIntPipe) id: number, @Session() session: Record<string, any>) {
     return this.salleService.findOne(id);
   }
 

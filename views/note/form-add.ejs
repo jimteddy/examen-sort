@@ -1,0 +1,19 @@
+<form class="form" action="/etudiant/<%= etudiant.id %>/notes" method="post" >
+
+    <% if (locals.matters) { %>
+        <div class="mb-3 col-6 mx-auto">
+            <label class="form-label display-7" for="matter">Séléctionner la Matière</label>
+            <select class="form-control form-control-sm" name="matter" >
+                <% matters.forEach(element => { %>
+                    <option value="<%= element.id %>"><%= element.libelle %></option>
+                <% }) %>
+            </select>
+        </div>
+    <% } %>
+
+    <%- include("../components/input", {type: 'number', name: 'note'}) %>
+    <div class="col-md-12 text-center">
+        <button class="btn btn-primary" type="submit">Ajouter note</button>
+    </div>
+
+</form>

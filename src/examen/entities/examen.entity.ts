@@ -25,6 +25,8 @@ export class Examen {
   @UpdateDateColumn()
   readonly updateAt : Date;
 
-  @ManyToOne(() => Client, (client) => client.examens)
+  @ManyToOne(() => Client, (client) => client.examens, {
+    nullable: false
+  })
   client : Client;
 }

@@ -1,11 +1,16 @@
-import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Render, Redirect, UploadedFile, UseInterceptors, Session } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, ParseIntPipe, Put, Render, Redirect, UploadedFile, UseInterceptors, Session, UseGuards } from '@nestjs/common';
 import { ClasseService } from './classe.service';
 import { CreateClasseDto } from './dto/create-classe.dto';
 import { UpdateClasseDto } from './dto/update-classe.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { log } from 'console';
 import { Client } from 'src/client/entities/client.entity';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 
+import { SessionGuard } from 'src/guards/session.guard';
+
+@UseGuards(SessionGuard)
 @Controller('classe')
 export class ClasseController {
   constructor(private readonly classeService: ClasseService) {}
@@ -26,17 +31,35 @@ export class ClasseController {
     return { classes, nombre }
   }
 
+  @Post('/upload')
+  @Redirect("/classe/upload")
+  @UseInterceptors(FileInterceptor('file', {
+    storage: diskStorage({
+      destination: "./files",
+      filename: (req, file, callback) => {
+        //const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+        //const ext = extname(file.originalname)
+        const filename = `${file.originalname}`
+        callback(null, filename)
+      },
+    })
+  }))
+  uploadFile(@UploadedFile() file: Express.Multer.File, ){
+    log(file)
+  }
+
+  @Get('/upload')
+  @Render("classe/file")
+  getUploadFile(){
+  
+  }
 
   @Get(':id')
   findOne(@Param('id', ParseIntPipe) id: number) {
     return this.classeService.findOne(id);
   }
 
-  @Post('/upload')
-  @UseInterceptors(FileInterceptor('file'))
-  uploadFile(@UploadedFile() file: Express.Multer.File, ){
-    log(file)
-  }
+
 
   @Get(':id/etudiants')
   @Render('etudiant/index')

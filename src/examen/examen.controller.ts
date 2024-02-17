@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Render,Res, Session, Redirect } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Render,Res, Session, Redirect, UseGuards } from '@nestjs/common';
 import { Response } from 'express'
 import { ExamenService } from './examen.service';
 import { CreateExamanDto } from './dto/create-examen.dto';
@@ -6,6 +6,9 @@ import { UpdateExamanDto } from './dto/update-examen.dto';
 import { Client } from 'src/client/entities/client.entity';
 import { Examen } from './entities/examen.entity';
 
+import { SessionGuard } from 'src/guards/session.guard';
+
+@UseGuards(SessionGuard)
 @Controller('examen')
 export class ExamenController {
   constructor(private readonly examenService: ExamenService) { }
@@ -34,7 +37,6 @@ export class ExamenController {
     } catch (error) {
       res.status(404).render("errors/404", { message : error.message})
     }
-
   }
 
   @Patch(':id')
@@ -46,6 +48,5 @@ export class ExamenController {
   remove(@Param('id', ParseIntPipe) id: number) {
     return this.examenService.remove(id);
   }
-
-
+  
 }

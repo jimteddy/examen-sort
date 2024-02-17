@@ -1,8 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Render, Redirect } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, Render, Redirect, UseGuards } from '@nestjs/common';
 import { FiliereService } from './filiere.service';
 import { CreateFiliereDto } from './dto/create-filiere.dto';
 import { UpdateFiliereDto } from './dto/update-filiere.dto';
 
+import { SessionGuard } from 'src/guards/session.guard';
+
+@UseGuards(SessionGuard)
 @Controller('filiere')
 export class FiliereController {
   constructor(private readonly filiereService: FiliereService) {}

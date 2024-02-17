@@ -24,7 +24,9 @@ export class Classe {
   @OneToMany(() => Etudiant, (etudiant)=> etudiant.classe)
   etudiants: Etudiant[]
 
-  @ManyToOne(() => Client, (client) => client.classes)
+  @ManyToOne(() => Client, (client) => client.classes, {
+    nullable: false
+  })
   client : Client;
 
 }

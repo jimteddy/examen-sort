@@ -1,5 +1,5 @@
 <% if (locals.classe) { %>
-    <table class="table table-bordered table-hover table-primary table-striped mt-2">
+    <table class="table table-bordered table-responsive table-hover table-primary table-striped mt-2">
         <thead>
             <tr>
                 <th>ID</th>
@@ -23,7 +23,7 @@
                 <td><%= etudiant.dateNaissance %></td>
                 <td><%= etudiant.lieuNaissance %></td>
                 <td>
-                    <a class="btn btn-outline-primary btn-sm" href="/classe/<%= classe.id %>/etudiants">Voir les notes</a>
+                    <a class="btn btn-outline-primary btn-sm" href="/etudiant/<%= etudiant.id %>/notes">Voir les notes</a>
                     <span>Moyenne</span><span class="badge text-bg-primary"><%= etudiant.Moyenne %></span>
                 </td>
                 <td><button class="btn btn-warning" ><a href="/etudiant/<%= etudiant.id %>/detail">Modifier</a></button></td>

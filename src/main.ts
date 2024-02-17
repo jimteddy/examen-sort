@@ -8,6 +8,7 @@ import * as pgSession from 'connect-pg-simple';
 import * as pg from 'pg';
 
 import { localsData } from './middlewares/localsData'
+import { SessionGuard } from './guards/session.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -40,7 +41,9 @@ async function bootstrap() {
     })
     );
     
-    app.use(localsData)
+    //app.useGlobalGuards(new SessionGuard())
+    app.use(localsData) 
+
     await app.listen(3000);
   }
 

@@ -8,20 +8,19 @@ import { JwtService } from '@nestjs/jwt';
 export class AuthService {
 
   constructor(
-    private readonly clientService : ClientService,
-    private readonly jwtService : JwtService,
+    //private readonly clientService : ClientService,
+    //private readonly jwtService : JwtService,
 
   ){}
 
   async signIn(username: string, pass: string): Promise<any> {
-    const client = await this.clientService.findOneByName(username);
-    if (client.password !== pass) {
-      throw new UnauthorizedException();
-    }
-    const { password, ...result } = client;
+    //const client = await this.clientService.findOneByName(username);
+    //if (client.password !== pass) throw new UnauthorizedException();
+    
+    //const { password, ...result } = client;
     // TODO: Generate a JWT and return it here
     // instead of the client object
-    return result;
+    //return result;
   }
 
 }

@@ -39,6 +39,14 @@ export class ExamenService {
     }
   }
 
+  async countAll(client: Client) : Promise<number> {
+    try {
+      return await this.examenRepository.countBy({client: { id: client.id}})
+    } catch (error) {
+      return 0
+    }
+  }
+
   async findOne(id: number) : Promise<Examen> {
     try{
       const examen = await this.examenRepository.findOne({ 

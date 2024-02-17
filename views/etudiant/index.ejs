@@ -1,7 +1,7 @@
 <%- include("../partials/header", {title: "Gestion des étudiants"}) %>
 
-<div class="container py-3">
-    <div>
+<div class="container-fluid py-2">
+    <div class="col col-md-12 col-lg-12 bg-light">
        <%- include('./table', {classe: locals.classe}) %>
     </div>
 
@@ -12,11 +12,14 @@
         </form>
     </div>
 
-    <div>
+    <div class="row row-cols-1 row-cols-md-1 row-cols-lg-2 py-0 px-0">
+        <div class="col col-md-4 col-lg-4 py-0 px-0">
         <%- include('./form-add', {classe: locals.classe}) %>
-    </div>
-    <div>
-        <%- include('./list', {classe: locals.classe}) %>
+        </div>
+
+        <div class="col col-md-8 col-lg-8">
+            <%- include('./list', {classe: locals.classe}) %>
+        </div>
     </div>
 </div>
 

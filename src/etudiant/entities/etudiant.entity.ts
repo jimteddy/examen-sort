@@ -1,6 +1,8 @@
+import { Expose } from "class-transformer";
 import { Classe } from "src/classe/entities/classe.entity";
 import { Client } from "src/client/entities/client.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
+import { Note } from "src/note/entities/note.entity";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, Timestamp, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Etudiant {
@@ -32,9 +34,22 @@ export class Etudiant {
   @UpdateDateColumn()
   readonly updateAt : Date;
 
-  @ManyToOne(() => Classe, (classe) => classe.etudiants)
+  @ManyToOne(() => Classe, (classe) => classe.etudiants, {
+    nullable: false
+  })
   classe: Classe
 
-  @ManyToOne(() => Client, (client) => client.etudiants)
+  @ManyToOne(() => Client, (client) => client.etudiants, {
+    nullable: false
+  })
   client : Client;
+
+  @OneToMany(()=>Note, (note) => note.etudiant)
+  notes : Note[]
+
+  @Expose()
+  get fullName(): string {
+    return `${this.noms} ${this.prenoms}`; 
+  }
+  
 }

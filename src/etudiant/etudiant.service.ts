@@ -5,7 +5,6 @@ import { Repository } from 'typeorm';
 import { Etudiant } from './entities/etudiant.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { ClasseService } from 'src/classe/classe.service';
-import { Classe } from 'src/classe/entities/classe.entity';
 import { Client } from 'src/client/entities/client.entity';
 //import * as eventEmitter from ''
 
@@ -40,11 +39,21 @@ export class EtudiantService {
   findOne(id: number): Promise<Etudiant> {
     return this.etudiantRepository.findOne({ where : { id: id}})
   }
-/*
+
+  async calMoyen(id: number): Promise<number> {
+    const etudiant = await this.findOne(id)
+    let nbrMatter = etudiant.notes.length
+    let noteEtudiant = 0 
+    etudiant.notes.forEach((note) => {
+      noteEtudiant += note.note
+    })
+    return noteEtudiant / nbrMatter
+  }
+
   update(id: number, updateEtudiantDto: UpdateEtudiantDto) {
     return this.etudiantRepository.update(id, {...updateEtudiantDto})
   }
-*/
+
   async remove(id: number) {
     try{
       return await this.etudiantRepository.delete(id)

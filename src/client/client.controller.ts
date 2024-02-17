@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Render, Redirect, UseInterceptors, ClassSerializerInterceptor, Session, Res, ParseIntPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Render, Redirect, UseInterceptors, ClassSerializerInterceptor, Session, Res, ParseIntPipe, HttpCode } from '@nestjs/common';
 import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
@@ -29,18 +29,21 @@ export class ClientController {
   @Redirect('/')
   async postLogin(@Body() body: LoginDto, @Session() session: Record<string, any>, @Res() res: Response){
     try{
-      const client = await this.clientService.postLogin(body)
-      session.client = client
-      session.connected = true
+      await this.clientService.postLogin(body).then((client) =>{
+        session.client = client
+        session.connected = true
+      })
+      
     }catch(error){
       res.status(404).render("errors/404", { message : error.message})
     }
   }
-
+ 
   @Post("/logout")
-  @Redirect('/login')
-  postLogout(@Session() session: Record<string, any>){
-    session.destroy(error => {});
+  @Redirect('/client/login')
+  async postLogout(@Session() session: Record<string, any>){
+    //console.log(session);
+    await session.destroy(error => {});
   }
 
   @Post()

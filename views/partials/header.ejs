@@ -8,11 +8,7 @@
     <title>EX-SORT | <%= title %></title>
 </head>
 <body>
-    <style>
-        .active {
-            color: red;
-        }
-    </style>
+   
     <header class="bg-warning">
         <nav class="navbar navbar-expand-sm bg-ligth">
             <div class="container">
@@ -26,10 +22,10 @@
                         </li>
                         <% if (!locals.connected) { %>
                         <li class="nav-item">
-                            <a href="/client/signup" class="nav-link">Inscription</a>
+                            <a href="/client/signup" class="nav-link">S'inscrire</a>
                         </li>
                         <li class="nav-item">
-                            <a href="/client/login" class="nav-link">Connexion</a>
+                            <a href="/client/login" class="nav-link">Se connecter</a>
                         </li>
                         <% } else { %>
                         <li class="nav-item">
@@ -51,7 +47,7 @@
                         
                         <li class="nav-item">
                             <form action="/client/logout" method="post">
-                                <button type="submit" class="btn nav-item">Déconnexion<span>(Compte <%= user.username %>)</span></button>
+                                <button type="submit" class="btn nav-item">Se Déconnecter<span>(Compte <%= user.username %>)</span></button>
                             </form>
                         </li>
                        

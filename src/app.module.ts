@@ -1,5 +1,5 @@
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm'
+import { MiddlewareConsumer, Module, NestModule, RequestMethod } from '@nestjs/common';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { ClientModule } from './client/client.module';
 import { Client } from './client/entities/client.entity';
 import { SalleModule } from './salle/salle.module';
@@ -17,6 +17,12 @@ import { Filiere } from './filiere/entities/filiere.entity';
 import { Matter } from './matter/entities/matter.entity';
 import { Salle } from './salle/entities/salle.entity';
 import { AuthModule } from './auth/auth.module';
+import { NoteModule } from './note/note.module';
+import { Note } from './note/entities/note.entity';
+import { MulterModule } from '@nestjs/platform-express';
+import multer from 'multer';
+import { MulterConfigService } from './pipes/multer.config.service';
+import { SessionCheckMiddleware } from './middlewares/session-sheck.middleware';
 
 
 @Module({
@@ -28,10 +34,11 @@ import { AuthModule } from './auth/auth.module';
       username: 'jimik',
       password: 'jimik2007life',
       database: "examen_sort",
-      entities: [Client, Examen, Classe, Etudiant, Filiere, Matter, Salle],
-      //entities: ['**/entities/*.entity{.ts}'],
+      entities: [Client, Examen, Classe, Etudiant, Filiere, Matter, Salle, Note],
+      //entities: ['/entities/*.entity{.ts}'],
       synchronize: true,
     }),
+    MulterModule.register({}),
     ClientModule,
     SalleModule,
     ClasseModule,
@@ -39,10 +46,17 @@ import { AuthModule } from './auth/auth.module';
     MatterModule,
     ExamenModule,
     FiliereModule,
-    //AuthModule,   
+    NoteModule,
+    //AuthModule,  
+  
     ],
+ 
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer.apply(SessionCheckMiddleware).forRoutes({path: "*", method: RequestMethod.ALL })
+  }
+}
 

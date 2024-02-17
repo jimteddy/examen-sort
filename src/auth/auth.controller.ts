@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, Redirect } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
@@ -11,7 +11,10 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
+  //@Redirect('/')
   signIn(@Body() signInDto: Record<string, any>) {
+    console.log("cocuo");
+    
     return this.authService.signIn(signInDto.username, signInDto.password);
   }
 }

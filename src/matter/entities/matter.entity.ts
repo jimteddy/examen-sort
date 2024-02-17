@@ -1,5 +1,6 @@
 import { Client } from "src/client/entities/client.entity";
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Note } from "src/note/entities/note.entity";
+import { Column, CreateDateColumn, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class Matter {
@@ -22,8 +23,12 @@ export class Matter {
   @UpdateDateColumn()
   readonly updateAt : Date;
 
+  @OneToMany(()=>Note, (note) => note.client)
+  notes : Note[]
 
-  @ManyToOne(() => Client, (client) => client.matters)
+  @ManyToOne(() => Client, (client) => client.matters, {
+    nullable: false, cascade: true
+  })
   client : Client;
 }
 

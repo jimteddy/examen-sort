@@ -6,6 +6,7 @@ import { Etudiant } from "src/etudiant/entities/etudiant.entity";
 import { Filiere } from "src/filiere/entities/filiere.entity";
 import { Matter } from "src/matter/entities/matter.entity";
 import { Salle } from "src/salle/entities/salle.entity";
+import { Note } from "src/note/entities/note.entity";
 
 @Entity({name: "client"})
 export class Client {
@@ -43,5 +44,9 @@ export class Client {
 
   @OneToMany(()=>Matter, (matter) => matter.client)
   matters : Matter[]
+
+  @OneToMany(()=>Note, (note) => note.client)
+  notes : Note[]
+
 
 }

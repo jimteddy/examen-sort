@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateClasseDto } from './dto/create-classe.dto';
 import { UpdateClasseDto } from './dto/update-classe.dto';
 import { Repository } from 'typeorm';
@@ -11,22 +11,22 @@ export class ClasseService {
 
   constructor(
     @InjectRepository(Classe) private readonly classeRepository: Repository<Classe>,
-  ){}
+  ) { }
 
-  async create(client: Client, createClasseDto: CreateClasseDto) : Promise<Classe> {
-    try{
+  async create(client: Client, createClasseDto: CreateClasseDto): Promise<Classe> {
+    try {
       const classe = this.classeRepository.create(createClasseDto)
       classe.client = client
       return await this.classeRepository.save(classe)
-    }catch(error){
+    } catch (error) {
       return error.message
     }
   }
 
-  async findAll(client: Client) : Promise<Classe[]> {
+  async findAll(client: Client): Promise<Classe[]> {
     const classes = await this.classeRepository.find({
-      where: {client: client},
-      order: {createAt: 'DESC'},
+      where: { client: client },
+      order: { createAt: 'DESC' },
       relations: {
         client: true
       }
@@ -34,30 +34,60 @@ export class ClasseService {
     return classes
   }
 
+  async countAll(client: Client) {
+    try {
+      const responses = await this.classeRepository.findAndCount({
+        where: { client: { id: client.id } },
+        relations: { 
+          client: true,
+          etudiants: true , 
+        },
+        select : {
+          id: true,
+          name:  true,
+          periode: true,
+          etudiants : {
+            id: true
+          },
+          client: {
+            id: true
+          }
+        }
+      })
+      let effectifTotal = 0
+      responses[0].forEach((classe) => {
+       effectifTotal += classe.etudiants.length
+      })
+      return { nbrClasses: responses[1], effectifTotal }
+    } catch (error) {
+      throw new NotFoundException(error.message)
+    }
+  }
+
   findOne(id: number) {
-    return this.classeRepository.findOne({where : {id : id}})
+    return this.classeRepository.findOne({ where: { id: id } })
   }
 
   async update(id: number, updateClasseDto: UpdateClasseDto) {
-    return await this.classeRepository.update(id, {...updateClasseDto})
+    return await this.classeRepository.update(id, { ...updateClasseDto })
   }
 
   async remove(id: number) {
-    try{
+    try {
       return await this.classeRepository.delete(id)
-    }catch(error){
+    } catch (error) {
       return error.message
     }
   }
 
   async getClasseEtudiant(id: number) {
     const classe: Classe = await this.classeRepository.findOne({
-      where: {id: id},
+      where: { id: id },
       relations: {
         etudiants: true,
       },
-    })    
-    return {classe}
+    })
+    return { classe }
   }
 
 }

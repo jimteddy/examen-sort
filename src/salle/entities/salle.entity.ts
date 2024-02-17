@@ -23,7 +23,9 @@ export class Salle {
   @UpdateDateColumn()
   readonly updateAt : Timestamp;
 
-  @ManyToOne(() => Client, (client) => client.salles)
+  @ManyToOne(() => Client, (client) => client.salles, {
+    nullable: false
+  })
   client : Client;
   
 }

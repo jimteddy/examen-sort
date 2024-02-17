@@ -18,6 +18,8 @@ export class Filiere {
   @UpdateDateColumn()
   readonly updateAt : Date;
 
-  @ManyToOne(() => Client, (client) => client.filieres)
+  @ManyToOne(() => Client, (client) => client.filieres, {
+    nullable: false
+  })
   client : Client;
 }
